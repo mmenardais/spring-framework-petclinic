@@ -62,7 +62,7 @@ pipeline {
                         //sh 'docker ps -q --filter ancestor="petclinic-uat" | xargs -r docker stop'
                         //sh 'docker container prune'
                         //sh 'docker run -d --name petclinic-uat -p 8290:8080 petclinic-project:latest'
-                        RunTest(petclinic-uat, 8290)
+                        RunTest('petclinic-uat', 8290)
                     }
                 }
                 stage('TEST') {
