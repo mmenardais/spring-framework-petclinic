@@ -1,3 +1,9 @@
+def RunTest(projectName, port) {
+    sh 'docker ps -q --filter ancestor=projectName | xargs -r docker stop'
+    sh 'docker container prune'
+    sh 'docker run -d --name petclinic-test -p port:8080 petclinic-project'
+}
+
 pipeline {
     agent any
     tools {
@@ -53,9 +59,10 @@ pipeline {
             parallel {
                 stage('UAT') {
                     steps {
-                        sh 'docker ps -q --filter ancestor="petclinic-uat" | xargs -r docker stop'
-                        sh 'docker container prune'
-                        sh 'docker run -d --name petclinic-uat -p 8290:8080 petclinic-project:latest'
+                        //sh 'docker ps -q --filter ancestor="petclinic-uat" | xargs -r docker stop'
+                        //sh 'docker container prune'
+                        //sh 'docker run -d --name petclinic-uat -p 8290:8080 petclinic-project:latest'
+                        RunTest(petclinic-uat, 8290)
                     }
                 }
                 stage('TEST') {
