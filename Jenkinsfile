@@ -29,7 +29,7 @@ pipeline {
                     }
             }
         }
-        stage('Non-Parallel Stage') {
+        stage('Non-Parallel Stage End') {
             steps {
                 echo 'This stage will be executed last.'
             }
