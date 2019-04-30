@@ -50,9 +50,22 @@ pipeline {
             }
         }
         stage('Run Test image') {
-            steps{
-                
-                sh 'docker run -d --name petclinic-test -p 8090:8080 petclinic-project'
+            parallel {
+                stage('UAT') {
+                    steps {
+                        sh 'docker run -d --name petclinic-uat -p 8290:8080 petclinic-project:latest'
+                    }
+                }
+                stage('TEST') {
+                    steps {
+                        sh 'docker run -d --name petclinic-test -p 8090:8080 petclinic-project'
+                    }
+                }
+                stage('PROD') {
+                    steps {
+                        sh 'docker run -d --name petclinic-prod -p 8390:8080 petclinic-project:latest'
+                    }
+                }
             }
         }
 
