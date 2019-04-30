@@ -54,21 +54,21 @@ pipeline {
                 stage('UAT') {
                     steps {
                         sh 'docker ps -q --filter ancestor="petclinic-uat" | xargs -r docker stop'
-                        sh 'docker rm -v $(docker ps -a -q -f status=exited)'
+                        sh 'docker container prune'
                         sh 'docker run -d --name petclinic-uat -p 8290:8080 petclinic-project:latest'
                     }
                 }
                 stage('TEST') {
                     steps {
                         sh 'docker ps -q --filter ancestor="petclinic-test" | xargs -r docker stop'
-                        sh 'docker rm -v $(docker ps -a -q -f status=exited)'
+                        sh 'docker container prune'
                         sh 'docker run -d --name petclinic-test -p 8090:8080 petclinic-project'
                     }
                 }
                 stage('PROD') {
                     steps {
                         sh 'docker ps -q --filter ancestor="petclinic-prod" | xargs -r docker stop'
-                        sh 'docker rm -v $(docker ps -a -q -f status=exited)'
+                        sh 'docker container prune'
                         sh 'docker run -d --name petclinic-prod -p 8390:8080 petclinic-project:latest'
                     }
                 }
