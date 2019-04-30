@@ -53,16 +53,19 @@ pipeline {
             parallel {
                 stage('UAT') {
                     steps {
+                        sh 'docker stop petclinic-uat && docker rm petclinic-uat'
                         sh 'docker run -d --name petclinic-uat -p 8290:8080 petclinic-project:latest'
                     }
                 }
                 stage('TEST') {
                     steps {
+                        sh 'docker stop petclinic-test && docker rm petclinic-test'
                         sh 'docker run -d --name petclinic-test -p 8090:8080 petclinic-project'
                     }
                 }
                 stage('PROD') {
                     steps {
+                        sh 'docker stop petclinic-prod && docker rm petclinic-prod'
                         sh 'docker run -d --name petclinic-prod -p 8390:8080 petclinic-project:latest'
                     }
                 }
